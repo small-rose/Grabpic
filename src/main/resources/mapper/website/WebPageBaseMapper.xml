@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaocai.web.demo.dao.website.WebPageBaseMapper">
+  <resultMap id="BaseResultMap" type="com.xiaocai.web.demo.entity.website.WebPageBase">
+    <id column="page_id" jdbcType="VARCHAR" property="pageId" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="page_no" jdbcType="BIGINT" property="pageNo" />
+    <result column="page_herf" jdbcType="VARCHAR" property="pageHerf" />
+    <result column="page_name" jdbcType="VARCHAR" property="pageName" />
+    <result column="add_time" jdbcType="VARCHAR" property="addTime" />
+    <result column="page_mark" jdbcType="VARCHAR" property="pageMark" />
+    <result column="link_tag" jdbcType="VARCHAR" property="linkTag" />
+    <result column="link_tag_attr" jdbcType="VARCHAR" property="linkTagAttr" />
+    <result column="link_keys" jdbcType="VARCHAR" property="linkKeys" />
+    <result column="link_total" jdbcType="BIGINT" property="linkTotal" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xiaocai.web.demo.entity.website.WebPageBase">
+    <result column="page_conetent" jdbcType="LONGVARCHAR" property="pageConetent" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithCategory" type="com.xiaocai.web.demo.entity.website.WebPageBase">
+    <id column="page_id" jdbcType="VARCHAR" property="pageId" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="page_no" jdbcType="BIGINT" property="pageNo" />
+    <result column="page_herf" jdbcType="VARCHAR" property="pageHerf" />
+    <result column="page_name" jdbcType="VARCHAR" property="pageName" />
+    <result column="add_time" jdbcType="VARCHAR" property="addTime" />
+    <result column="page_mark" jdbcType="VARCHAR" property="pageMark" />
+    <result column="link_tag" jdbcType="VARCHAR" property="linkTag" />
+    <result column="link_tag_attr" jdbcType="VARCHAR" property="linkTagAttr" />
+    <result column="link_keys" jdbcType="VARCHAR" property="linkKeys" />
+    <result column="link_total" jdbcType="BIGINT" property="linkTotal" />
+    <association property="webCategory" javaType="com.xiaocai.web.demo.entity.website.WebCategory">
+    	<id column="category_id" jdbcType="VARCHAR" property="categoryId" />
+	    <result column="web_id" jdbcType="VARCHAR" property="webId" />
+	    <result column="category_url" jdbcType="VARCHAR" property="categoryUrl" />
+	    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    </association>
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    page_id, category_id, page_no, page_herf, page_name, add_time, page_mark,link_tag,link_tag_attr,link_keys,link_total
+  </sql>
+  <sql id="Blob_Column_List">
+    page_conetent
+  </sql>
+  <sql id="Column_List_With_Category">
+    p.page_id, p.category_id, p.page_no, p.page_herf, p.page_name, p.add_time, p.page_mark,p.link_tag,p.link_tag_attr,p.link_keys,p.link_total,
+    c.category_id,c.web_id,c.category_url,c.category_name
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.xiaocai.web.demo.entity.website.WebPageBaseExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_web_page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.xiaocai.web.demo.entity.website.WebPageBaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_web_page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithCategory" parameterType="com.xiaocai.web.demo.entity.website.WebPageBaseExample" resultMap="ResultMapWithCategory">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Column_List_With_Category" />
+    from tb_web_page p  join tb_web_category c on p.category_id = c.category_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+   <select id="selectByPrimaryKeyWithCategory" parameterType="java.lang.String" resultMap="ResultMapWithCategory">
+    select 
+    <include refid="Column_List_With_Category" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_web_page p left join tb_web_category c on p.category_id = c.category_id
+    where p.page_id = #{pageId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_web_page
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_web_page
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xiaocai.web.demo.entity.website.WebPageBaseExample">
+    delete from tb_web_page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xiaocai.web.demo.entity.website.WebPageBase">
+    insert into tb_web_page (page_id, category_id, page_no, 
+      page_herf, page_name, add_time, 
+      page_mark, page_conetent ,link_tag,link_tag_attr,link_keys)
+    values (#{pageId,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, #{pageNo,jdbcType=BIGINT}, 
+      #{pageHerf,jdbcType=VARCHAR}, #{pageName,jdbcType=VARCHAR}, #{addTime,jdbcType=VARCHAR}, 
+      #{pageMark,jdbcType=VARCHAR}, #{pageConetent,jdbcType=LONGVARCHAR},
+      #{linkTag,jdbcType=VARCHAR}, #{linkTagAttr,jdbcType=VARCHAR}, #{linkKeys,jdbcType=VARCHAR} )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaocai.web.demo.entity.website.WebPageBase">
+    insert into tb_web_page
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pageId != null">
+        page_id,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="pageNo != null">
+        page_no,
+      </if>
+      <if test="pageHerf != null">
+        page_herf,
+      </if>
+      <if test="pageName != null">
+        page_name,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="pageMark != null">
+        page_mark,
+      </if>
+      <if test="pageConetent != null">
+        page_conetent,
+      </if>
+      <if test="linkTag != null">
+        link_tag,
+      </if>
+      <if test="linkTagAttr != null">
+        link_tag_attr,
+      </if>
+      <if test="linkKeys != null">
+        link_keys,
+      </if>
+      <if test="linkTotal != null">
+        link_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pageId != null">
+        #{pageId,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageNo != null">
+        #{pageNo,jdbcType=BIGINT},
+      </if>
+      <if test="pageHerf != null">
+        #{pageHerf,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null">
+        #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pageMark != null">
+        #{pageMark,jdbcType=VARCHAR},
+      </if>
+      <if test="pageConetent != null">
+        #{pageConetent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="linkTag != null">
+        #{linkTag,jdbcType=VARCHAR}, 
+      </if>
+      <if test="linkTagAttr != null">
+        #{linkTagAttr,jdbcType=VARCHAR}, 
+      </if>
+      <if test="linkKeys != null">
+        #{linkKeys,jdbcType=VARCHAR},
+      </if>
+       <if test="linkTotal != null">
+        #{linkTotal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaocai.web.demo.entity.website.WebPageBaseExample" resultType="java.lang.Long">
+    select count(*) from tb_web_page
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_web_page
+    <set>
+      <if test="record.categoryId != null">
+        category_id = #{record.categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageNo != null">
+        page_no = #{record.pageNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.pageHerf != null">
+        page_herf = #{record.pageHerf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageName != null">
+        page_name = #{record.pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageMark != null">
+        page_mark = #{record.pageMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageConetent != null">
+        page_conetent = #{record.pageConetent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test=" record.linkTag != null">
+        link_tag = #{record.linkTag,jdbcType=VARCHAR}, 
+      </if>
+      <if test="record.linkTagAttr != null">
+        link_tag_attr = #{record.linkTagAttr,jdbcType=VARCHAR}, 
+      </if>
+      <if test="record.linkKeys != null">
+        link_keys = #{record.linkKeys,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkTotal != null">
+        link_total = #{record.linkTotal,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tb_web_page
+    set 
+      category_id = #{record.categoryId,jdbcType=VARCHAR},
+      page_no = #{record.pageNo,jdbcType=BIGINT},
+      page_herf = #{record.pageHerf,jdbcType=VARCHAR},
+      page_name = #{record.pageName,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=VARCHAR},
+      page_mark = #{record.pageMark,jdbcType=VARCHAR},
+      link_tag = #{record.linkTag,jdbcType=VARCHAR}, 
+      link_tag_attr = #{record.linkTagAttr,jdbcType=VARCHAR}, 
+      link_keys = #{record.linkKeys,jdbcType=VARCHAR},
+      link_total = #{record.linkTotal,jdbcType=BIGINT},
+      page_conetent = #{record.pageConetent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_web_page
+    set 
+      category_id = #{record.categoryId,jdbcType=VARCHAR},
+      page_no = #{record.pageNo,jdbcType=BIGINT},
+      page_herf = #{record.pageHerf,jdbcType=VARCHAR},
+      page_name = #{record.pageName,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=VARCHAR},
+      link_tag = #{record.linkTag,jdbcType=VARCHAR}, 
+      link_tag_attr = #{record.linkTagAttr,jdbcType=VARCHAR}, 
+      link_keys = #{record.linkKeys,jdbcType=VARCHAR},
+      link_total = #{record.linkTotal,jdbcType=BIGINT},
+      page_mark = #{record.pageMark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaocai.web.demo.entity.website.WebPageBase">
+    update tb_web_page
+    <set>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageNo != null">
+        page_no = #{pageNo,jdbcType=BIGINT},
+      </if>
+      <if test="pageHerf != null">
+        page_herf = #{pageHerf,jdbcType=VARCHAR},
+      </if>
+      <if test="pageName != null">
+        page_name = #{pageName,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="pageMark != null">
+        page_mark = #{pageMark,jdbcType=VARCHAR},
+      </if>
+      <if test="pageConetent != null">
+        page_conetent = #{pageConetent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="linkTag != null">
+        link_tag = #{linkTag,jdbcType=VARCHAR}, 
+      </if>
+      <if test="linkTagAttr != null">
+        link_tag_attr = #{linkTagAttr,jdbcType=VARCHAR}, 
+      </if>
+      <if test="linkKeys != null">
+        link_keys = #{linkKeys,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTotal != null">
+        link_total = #{linkTotal,jdbcType=BIGINT},
+      </if>
+    </set>
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xiaocai.web.demo.entity.website.WebPageBase">
+    update tb_web_page
+    set category_id = #{categoryId,jdbcType=VARCHAR},
+      page_no = #{pageNo,jdbcType=BIGINT},
+      page_herf = #{pageHerf,jdbcType=VARCHAR},
+      page_name = #{pageName,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=VARCHAR},
+      page_mark = #{pageMark,jdbcType=VARCHAR},
+      link_tag = #{record.linkTag,jdbcType=VARCHAR}, 
+      link_tag_attr = #{record.linkTagAttr,jdbcType=VARCHAR}, 
+      link_keys = #{record.linkKeys,jdbcType=VARCHAR},
+      link_total = #{record.linkTotal,jdbcType=BIGINT},
+      page_conetent = #{pageConetent,jdbcType=LONGVARCHAR}
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaocai.web.demo.entity.website.WebPageBase">
+    update tb_web_page
+    set category_id = #{categoryId,jdbcType=VARCHAR},
+      page_no = #{pageNo,jdbcType=BIGINT},
+      page_herf = #{pageHerf,jdbcType=VARCHAR},
+      page_name = #{pageName,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=VARCHAR},
+      link_tag = #{record.linkTag,jdbcType=VARCHAR}, 
+      link_tag_attr = #{record.linkTagAttr,jdbcType=VARCHAR}, 
+      link_keys = #{record.linkKeys,jdbcType=VARCHAR},
+      link_total = #{record.linkTotal,jdbcType=BIGINT},
+      page_mark = #{pageMark,jdbcType=VARCHAR}
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </update>
+  
+   <insert id="insertByBatch" parameterType="java.util.List">
+      insert into tb_web_page (page_id, category_id, page_no, 
+      page_herf, page_name, add_time, 
+      page_mark,link_tag,link_tag_attr, link_keys)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.pageId,jdbcType=VARCHAR},
+		      #{item.categoryId,jdbcType=VARCHAR},
+		      #{item.pageNo,jdbcType=BIGINT},
+		      #{item.pageHerf,jdbcType=VARCHAR},
+		      #{item.pageName,jdbcType=VARCHAR},
+		      #{item.addTime,jdbcType=VARCHAR},
+		      #{item.pageMark,jdbcType=VARCHAR},
+		      #{item.linkTag,jdbcType=VARCHAR}, 
+		      #{item.linkTagAttr,jdbcType=VARCHAR}, 
+		      #{item.linkKeys,jdbcType=VARCHAR}
+			)
+        </foreach>
+    </insert>
+</mapper>

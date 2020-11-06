@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-3.0.xsd
+      http://www.springframework.org/schema/mvc
+	  http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd ">
+		
+
+	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
+	<!-- 加载controller -->
+	<context:component-scan base-package="com.xiaocai.web.*" use-default-filters="false">
+		<context:include-filter type="annotation"	expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<!-- 视图解析器 -->
+	<!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
+	<bean id="defaultViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="3">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html" />
+		<property name="prefix" value="/webpage/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+<!-- 	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean> -->
+	
+	<mvc:default-servlet-handler/>
+	
+	<mvc:annotation-driven/>
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	     <property name="urlMap">
+	         <map>
+	              <entry key="/Grabpic/**" value="myResourceHandler" />
+	         </map>
+	     </property>
+	     <property name="order" value="100000" />       
+	</bean>
+	
+	
+	<bean id="myResourceHandler" name="myResourceHandler"
+	      class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+	      <property name="locations" value="/请求的文件路径/" />
+	      <property name="supportedMethods">
+	         <list>
+	            <value>GET</value>
+	            <value>HEAD</value>
+	            <value>POST</value>
+	            <value>PUT</value>
+	         </list>
+	     </property>
+	  
+	</bean>
+</beans>

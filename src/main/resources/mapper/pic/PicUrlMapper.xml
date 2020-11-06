@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaocai.web.demo.dao.pic.PicUrlMapper">
+  <resultMap id="BaseResultMap" type="com.xiaocai.web.demo.entity.pic.PicUrl">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="addr_name" jdbcType="VARCHAR" property="addrName" />
+    <result column="addr_desc" jdbcType="VARCHAR" property="addrDesc" />
+    <result column="is_del" jdbcType="VARCHAR" property="isDel" />
+    <result column="is_mark" jdbcType="VARCHAR" property="isMark" />
+    <result column="is_fetch" jdbcType="VARCHAR" property="isFetch" />
+    <result column="add_time" jdbcType="VARCHAR" property="addTime" />
+    <result column="addr_code" jdbcType="VARCHAR" property="addrCode" />
+    
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, addr_name, addr_desc, is_del, is_mark,is_fetch,add_time,addr_code
+  </sql>
+  <select id="selectByExample" parameterType="com.xiaocai.web.demo.entity.pic.PicUrlExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_url
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_url
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_url
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xiaocai.web.demo.entity.pic.PicUrlExample">
+    delete from tb_url
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xiaocai.web.demo.entity.pic.PicUrl">
+    insert into tb_url (id, addr_name, addr_desc, 
+      is_del, is_mark, is_fetch,add_time,addr_code)
+    values (#{id,jdbcType=VARCHAR}, #{addrName,jdbcType=VARCHAR}, #{addrDesc,jdbcType=VARCHAR}, 
+      #{isDel,jdbcType=VARCHAR}, #{isMark,jdbcType=VARCHAR}), #{isFetch,jdbcType=VARCHAR})
+      , #{addTime,jdbcType=VARCHAR}), #{addrCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaocai.web.demo.entity.pic.PicUrl">
+    insert into tb_url
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="addrName != null">
+        addr_name,
+      </if>
+      <if test="addrDesc != null">
+        addr_desc,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="isMark != null">
+        is_mark,
+      </if>
+      <if test="isMark != null">
+        is_fetch,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addrCode != null">
+        addr_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="addrName != null">
+        #{addrName,jdbcType=VARCHAR},
+      </if>
+      <if test="addrDesc != null">
+        #{addrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=VARCHAR},
+      </if>
+      <if test="isMark != null">
+        #{isMark,jdbcType=VARCHAR},
+      </if>
+       <if test="isFetch != null">
+        #{isFetch,jdbcType=VARCHAR},
+      </if>
+       <if test="addTime != null">
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+       <if test="addrCode != null">
+        #{addrCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaocai.web.demo.entity.pic.PicUrlExample" resultType="java.lang.Long">
+    select count(*) from tb_url
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_url
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrName != null">
+        addr_name = #{record.addrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrDesc != null">
+        addr_desc = #{record.addrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDel != null">
+        is_del = #{record.isDel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMark != null">
+        is_mark = #{record.isMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addrCode != null">
+        addr_code = #{record.addrCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_url
+    set id = #{record.id,jdbcType=VARCHAR},
+      addr_name = #{record.addrName,jdbcType=VARCHAR},
+      addr_desc = #{record.addrDesc,jdbcType=VARCHAR},
+      is_del = #{record.isDel,jdbcType=VARCHAR},
+      is_mark = #{record.isMark,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=VARCHAR},
+      addr_code = #{record.addrCode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaocai.web.demo.entity.pic.PicUrl">
+    update tb_url
+    <set>
+      <if test="addrName != null">
+        addr_name = #{addrName,jdbcType=VARCHAR},
+      </if>
+      <if test="addrDesc != null">
+        addr_desc = #{addrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=VARCHAR},
+      </if>
+      <if test="isMark != null">
+        is_mark = #{isMark,jdbcType=VARCHAR},
+      </if>
+       <if test="isFetch != null">
+        is_fetch = #{isFetch,jdbcType=VARCHAR},
+      </if>
+       <if test="addTime != null">
+        add_time = #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="addrCode != null">
+        addr_code = #{addrCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaocai.web.demo.entity.pic.PicUrl">
+    update tb_url
+    set addr_name = #{addrName,jdbcType=VARCHAR},
+      addr_desc = #{addrDesc,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=VARCHAR},
+      is_mark = #{isMark,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=VARCHAR},
+      addr_code = #{addrCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

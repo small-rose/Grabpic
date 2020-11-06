@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaocai.web.demo.dao.website.WebLinkBaseMapper">
+  <resultMap id="BaseResultMap" type="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    <id column="link_id" jdbcType="VARCHAR" property="linkId" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="page_id" jdbcType="VARCHAR" property="pageId" />
+    <result column="link_no" jdbcType="BIGINT" property="linkNo" />
+    <result column="link_herf" jdbcType="VARCHAR" property="linkHerf" />
+    <result column="link_name" jdbcType="VARCHAR" property="linkName" />
+    <result column="link_valid" jdbcType="VARCHAR" property="linkValid" />
+    <result column="add_time" jdbcType="VARCHAR" property="addTime" />
+    <result column="link_mark" jdbcType="VARCHAR" property="linkMark" />
+    <result column="img_tag" jdbcType="VARCHAR" property="imgTag" />
+    <result column="img_tag_attr" jdbcType="VARCHAR" property="imgTagAttr" />
+    <result column="pic_total" jdbcType="BIGINT" property="picTotal" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    <result column="link_conetent" jdbcType="LONGVARCHAR" property="linkConetent" />
+  </resultMap>
+  <resultMap id="ResultMapWithCtPg" type="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    <id column="link_id" jdbcType="VARCHAR" property="linkId" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="page_id" jdbcType="VARCHAR" property="pageId" />
+    <result column="link_no" jdbcType="BIGINT" property="linkNo" />
+    <result column="link_herf" jdbcType="VARCHAR" property="linkHerf" />
+    <result column="link_name" jdbcType="VARCHAR" property="linkName" />
+    <result column="link_valid" jdbcType="VARCHAR" property="linkValid" />
+    <result column="add_time" jdbcType="VARCHAR" property="addTime" />
+    <result column="link_mark" jdbcType="VARCHAR" property="linkMark" />
+    <result column="img_tag" jdbcType="VARCHAR" property="imgTag" />
+    <result column="img_tag_attr" jdbcType="VARCHAR" property="imgTagAttr" />
+    <result column="pic_total" jdbcType="BIGINT" property="picTotal" />
+    <association property="webPageBase" javaType="com.xiaocai.web.demo.entity.website.WebPageBase">
+        <id column="page_id" jdbcType="VARCHAR" property="pageId" />
+	    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+	    <result column="page_no" jdbcType="BIGINT" property="pageNo" />
+	    <result column="page_herf" jdbcType="VARCHAR" property="pageHerf" />
+	    <result column="page_name" jdbcType="VARCHAR" property="pageName" />
+    </association>
+    <association property="webCategory" javaType="com.xiaocai.web.demo.entity.website.WebCategory">
+        <id column="category_id" jdbcType="VARCHAR" property="categoryId" />
+	    <result column="web_id" jdbcType="VARCHAR" property="webId" />
+	    <result column="category_url" jdbcType="VARCHAR" property="categoryUrl" />
+	    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    link_id, category_id,page_id, link_no, link_herf, link_name, link_valid, add_time,link_mark,img_tag,img_tag_attr,pic_total
+  </sql>
+  <sql id="Blob_Column_List">
+    link_conetent
+  </sql>
+  <sql id="Column_List_CtPg">
+    l.link_id, l.category_id, l.page_id, l.link_no, l.link_herf, l.link_name, l.link_valid, l.add_time,l.link_mark,l.img_tag,l.img_tag_attr,pic_total,
+    c.category_id, c.web_id, c.category_url, c.category_name,
+    p.page_id,p.category_id, p.page_no, p.page_herf, p.page_name
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBaseExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_web_link
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBaseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_web_link
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectByExampleWithCtPg" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBaseExample" resultMap="ResultMapWithCtPg">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Column_List_CtPg" />
+    from ( tb_web_link l left join tb_web_category c on l.category_id=c.category_id) left join tb_web_page p on l.page_id=p.page_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_web_link
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKeyWithCtPg" parameterType="java.lang.String" resultMap="ResultMapWithCtPg">
+    select 
+    <include refid="Column_List_CtPg" />
+    from ( tb_web_link l left join tb_web_category c on l.category_id=c.category_id) left join tb_web_page p on l.page_id=p.page_id 
+    where l.link_id = #{linkId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_web_link
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBaseExample">
+    delete from tb_web_link
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    insert into tb_web_link (link_id, category_id,page_id, link_no, 
+      link_herf, link_name, link_valid, 
+      add_time,link_mark, link_conetent,img_tag,img_tag_attr)
+    values (#{linkId,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, #{pageId,jdbcType=VARCHAR}, #{linkNo,jdbcType=BIGINT}, 
+      #{linkHerf,jdbcType=VARCHAR}, #{linkName,jdbcType=VARCHAR}, #{linkValid,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=VARCHAR},  #{linkMark,jdbcType=VARCHAR},#{linkConetent,jdbcType=LONGVARCHAR},
+      #{imgTag,jdbcType=VARCHAR},#{imgTagAttr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    insert into tb_web_link
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="linkId != null">
+        link_id,
+      </if>
+      <if test="pageId != null">
+        page_id,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="linkNo != null">
+        link_no,
+      </if>
+      <if test="linkHerf != null">
+        link_herf,
+      </if>
+      <if test="linkName != null">
+        link_name,
+      </if>
+      <if test="linkValid != null">
+        link_valid,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="linkMark != null">
+        link_mark,
+      </if>
+      <if test="linkConetent != null">
+        link_conetent,
+      </if>
+      <if test="imgTag != null">
+        img_tag,
+      </if>
+      <if test="imgTagAttr != null">
+        img_tag_attr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="linkId != null">
+        #{linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageId != null">
+        #{pageId,jdbcType=VARCHAR},
+      </if>
+      <if test="linkNo != null">
+        #{linkNo,jdbcType=BIGINT},
+      </if>
+      <if test="linkHerf != null">
+        #{linkHerf,jdbcType=VARCHAR},
+      </if>
+      <if test="linkName != null">
+        #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkValid != null">
+        #{linkValid,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMark != null">
+         #{linkMark,jdbcType=VARCHAR},
+      </if>
+      <if test="linkConetent != null">
+        #{linkConetent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="imgTag != null">
+        #{imgTag,jdbcType=VARCHAR},
+      </if>
+      <if test="imgTagAttr != null">
+        #{imgTagAttr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBaseExample" resultType="java.lang.Long">
+    select count(*) from tb_web_link
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_web_link
+    <set>
+      <if test="record.linkId != null">
+        link_id = #{record.linkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pageId != null">
+        page_id = #{record.pageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryId != null">
+        category_id = #{record.categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkNo != null">
+        link_no = #{record.linkNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.linkHerf != null">
+        link_herf = #{record.linkHerf,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkName != null">
+        link_name = #{record.linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkValid != null">
+        link_valid = #{record.linkValid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkMark != null">
+        link_mark = #{record.linkMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkConetent != null">
+        link_conetent = #{record.linkConetent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.imgTag != null">
+        img_tag = #{record.imgTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgTagAttr != null">
+        img_tag_attr = #{record.imgTagAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picTotal != null">
+        pic_total = #{record.picTotal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tb_web_link
+    set link_id = #{record.linkId,jdbcType=VARCHAR},
+      page_id = #{record.pageId,jdbcType=VARCHAR},
+      category_id = #{record.categoryId,jdbcType=VARCHAR},
+      link_no = #{record.linkNo,jdbcType=BIGINT},
+      link_herf = #{record.linkHerf,jdbcType=VARCHAR},
+      link_name = #{record.linkName,jdbcType=VARCHAR},
+      link_valid = #{record.linkValid,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=VARCHAR},
+      link_mark = #{record.linkMark,jdbcType=VARCHAR},
+      img_tag = #{record.imgTag,jdbcType=VARCHAR},
+      img_tag_attr = #{record.imgTagAttr,jdbcType=VARCHAR},
+      pic_total = #{record.picTotal,jdbcType=VARCHAR},
+      link_conetent = #{record.linkConetent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_web_link
+    set link_id = #{record.linkId,jdbcType=VARCHAR},
+      page_id = #{record.pageId,jdbcType=VARCHAR},
+      category_id = #{record.categoryId,jdbcType=VARCHAR},
+      link_no = #{record.linkNo,jdbcType=BIGINT},
+      link_herf = #{record.linkHerf,jdbcType=VARCHAR},
+      link_name = #{record.linkName,jdbcType=VARCHAR},
+      link_valid = #{record.linkValid,jdbcType=VARCHAR},
+      link_mark = #{record.linkMark,jdbcType=VARCHAR},
+      img_tag = #{record.imgTag,jdbcType=VARCHAR},
+      img_tag_attr = #{record.imgTagAttr,jdbcType=VARCHAR},
+      pic_total = #{record.picTotal,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    update tb_web_link
+    <set>
+      <if test="pageId != null">
+        page_id = #{pageId,jdbcType=VARCHAR},
+      </if>
+       <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>     
+      <if test="linkNo != null">
+        link_no = #{linkNo,jdbcType=BIGINT},
+      </if>
+      <if test="linkHerf != null">
+        link_herf = #{linkHerf,jdbcType=VARCHAR},
+      </if>
+      <if test="linkName != null">
+        link_name = #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkValid != null">
+        link_valid = #{linkValid,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=VARCHAR},
+      </if>
+       <if test="linkMark != null">
+        link_mark = #{linkMark,jdbcType=VARCHAR},
+      </if>
+      <if test="linkConetent != null">
+        link_conetent = #{linkConetent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="imgTag != null">
+        img_tag = #{imgTag,jdbcType=VARCHAR},
+      </if>
+      <if test="imgTagAttr != null">
+        img_tag_attr = #{imgTagAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="picTotal!=null">
+        pic_total = #{picTotal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    update tb_web_link
+    set page_id = #{pageId,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
+      link_no = #{linkNo,jdbcType=BIGINT},
+      link_herf = #{linkHerf,jdbcType=VARCHAR},
+      link_name = #{linkName,jdbcType=VARCHAR},
+      link_valid = #{linkValid,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=VARCHAR},
+      link_mark = #{linkMark,jdbcType=VARCHAR},
+      img_tag = #{imgTag,jdbcType=VARCHAR},
+      img_tag_attr = #{imgTagAttr,jdbcType=VARCHAR},
+      pic_total = #{picTotal,jdbcType=VARCHAR},
+      link_conetent = #{linkConetent,jdbcType=LONGVARCHAR}
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xiaocai.web.demo.entity.website.WebLinkBase">
+    update tb_web_link
+    set page_id = #{pageId,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
+      link_no = #{linkNo,jdbcType=BIGINT},
+      link_herf = #{linkHerf,jdbcType=VARCHAR},
+      link_name = #{linkName,jdbcType=VARCHAR},
+      link_valid = #{linkValid,jdbcType=VARCHAR},
+      link_mark = #{linkMark,jdbcType=VARCHAR},
+      img_tag = #{imgTag,jdbcType=VARCHAR},
+      img_tag_attr = #{imgTagAttr,jdbcType=VARCHAR},
+      pic_total = #{picTotal,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=VARCHAR}
+    where link_id = #{linkId,jdbcType=VARCHAR}
+  </update>
+  <insert id="insertByBatch" parameterType="java.util.List">
+      insert into tb_web_link (link_id, category_id, page_id, link_no, 
+      link_herf, link_name, link_valid, 
+      add_time,link_mark,img_tag,img_tag_attr)
+      values
+        <foreach collection="list" item="item" index="index" separator=",">
+             (#{item.linkId,jdbcType=VARCHAR}, #{item.categoryId,jdbcType=VARCHAR},#{item.pageId,jdbcType=VARCHAR}, #{item.linkNo,jdbcType=BIGINT}, 
+		      #{item.linkHerf,jdbcType=VARCHAR}, #{item.linkName,jdbcType=VARCHAR}, #{item.linkValid,jdbcType=VARCHAR}, 
+		      #{item.addTime,jdbcType=VARCHAR},  #{item.linkMark,jdbcType=VARCHAR},
+		      #{item.imgTag,jdbcType=VARCHAR},  #{item.imgTagAttr,jdbcType=VARCHAR}
+		      )
+        </foreach>
+    </insert>
+    <select id="countLinkTotalByPageId" parameterType="java.lang.String" resultType="java.lang.Long">
+    select count(*) from tb_web_link
+    where page_id = #{pageId,jdbcType=VARCHAR}
+  </select>
+</mapper>
