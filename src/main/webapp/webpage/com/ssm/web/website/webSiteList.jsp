@@ -12,7 +12,7 @@
 <!--  web 路径问题
 不以/开始的相对路径，找资源，以当前资源为基础
 以/开始的路径，找资源，以服务器路径为标准（http://localhost:8080）
-	http://localhost:8080/ssm
+	http://localhost:8080/Grabpic
 -->
 <script type="text/javascript" src="${APP_PATH}/static/js/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" href="${APP_PATH}/static/bootstrap-3.3.7/css/bootstrap.min.css"/>
@@ -32,7 +32,7 @@ text-overflow: ellipsis;
 		<!-- 标题 -->
 		<div class="row">
 		  <div class="col-md-12">
-		  	<h3>SSM-- Web Site </h3><h5>
+		  	<h3>Grabpic-抓取站点 </h3>
 		  </div>
 		</div>
 		<!-- 按钮 -->

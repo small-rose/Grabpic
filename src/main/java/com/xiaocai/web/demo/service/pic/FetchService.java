@@ -71,9 +71,9 @@ public class FetchService {
 
 			  String altSrc = link.attr("alt src");
 			  String dataSrc = link.attr("data-src");
-			  System.out.println("analysisDoc img abs src link  "+linkName+"--> "+linkHref+ "-->"+RegexUtil.isPicLink(linkHref));
-			  System.out.println("analysisDoc img alt src link  "+linkName+"--> "+altSrc+ "-->"+RegexUtil.isPicLink(altSrc));
-			  System.out.println("analysisDoc img data src link  "+linkName+"--> "+dataSrc+ "-->"+RegexUtil.isPicLink(dataSrc));
+			  //System.out.println("analysisDoc img abs src link  "+linkName+"--> "+linkHref+ "-->"+RegexUtil.isPicLink(linkHref));
+			  //System.out.println("analysisDoc img alt src link  "+linkName+"--> "+altSrc+ "-->"+RegexUtil.isPicLink(altSrc));
+			  //System.out.println("analysisDoc img data src link  "+linkName+"--> "+dataSrc+ "-->"+RegexUtil.isPicLink(dataSrc));
 			  if(StringUtils.isEmpty(linkName) || "".equals(linkName.trim())){
 					linkName = link.attr("alt");
 			  }

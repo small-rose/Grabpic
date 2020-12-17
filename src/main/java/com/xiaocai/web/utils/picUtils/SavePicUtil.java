@@ -14,7 +14,7 @@ import com.xiaocai.web.utils.common.ConstantUtils;
 
 public class SavePicUtil {
 
-	private static String roadPath = "F:/pic_html/fetch_pic/";
+	private static String roadPath = "C:/fetch_pic/";
 	static int tmpIndex = 0;
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH");
 	static SimpleDateFormat tmp = new SimpleDateFormat("yyyyMMddHHmmsss");
@@ -23,6 +23,9 @@ public class SavePicUtil {
 	public static String save(String imgSrc,String Name,String sufffix){
 		String now = sdf.format(new Date());
 		String filePath = roadPath+now+"/";
+		if(!new File(filePath).exists()){
+			new File(filePath).mkdirs();
+		}
 		String result = "";
 		try{
 			//System.err.println("imgSrc :"+imgSrc);

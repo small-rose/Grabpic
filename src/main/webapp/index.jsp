@@ -29,7 +29,7 @@
 		<!-- 标题 -->
 		<div class="row">
 		  <div class="col-md-12">
-		  	<h1>SSM-DEMO-CURD</h1>
+		  	<h1>Grabpic</h1>
 		  </div>
 		</div>
 		<!-- 按钮 -->
@@ -53,17 +53,8 @@
 		    		</tr>
 		    		</thead>
 		    		<tbody>
-		    		<tr>
-		    			<th>1</th>
-		    			<th>员工curd</th>
-		    			<th>curd操作、ajax模式curd</th>
-		    			<th>
-		    				<a href="${APP_PATH }/emps "><button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil">Forward Page Demo</span></button></a>
-							<a href="${APP_PATH }/empsAjaxDemo"><button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil">Ajax Demo</span></button></a>	
-						</th>
-					</tr>
 					<tr>
-						<th>2</th>
+						<th>1</th>
 		    			<th>pic fatch</th>
 		    			<th>获取网上图片</th>
 		    			<th>
@@ -72,7 +63,7 @@
 						</th>
 					</tr>
 					<tr>
-						<th>3</th>
+						<th>2</th>
 		    			<th>图片显示</th>
 		    			<th>页面展示图片</th>
 		    			<th>

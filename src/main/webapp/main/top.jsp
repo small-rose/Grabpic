@@ -23,69 +23,45 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/Grabpic">Home<span class="sr-only">(current)</span></a>
+      <a class="navbar-brand" href="/Grabpic">Grabpic<span class="sr-only">(current)</span></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li id="curd_menu"><!-- class="active" -->
-        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">员工CURD <span class="caret"></span></a><!-- <span class="sr-only">(current)</span> -->
-        	<ul class="dropdown-menu">
-            <li><a href="${APP_PATH }/emps" >Emps action</a></li>
-            <li><a href="${APP_PATH }/empsAjaxDemo ">EmpsAjaxDemo</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-        <!-- <li><a href="#">Ajax</a></li> -->
+     
         <li class="dropdown" id="fetch_menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fetch Web<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">抓取独立页面<span class="caret"></span></a>
           <ul class="dropdown-menu" >
-            <li><a href="${APP_PATH }/picUrlPage">Fetch Action</a></li>
-            <li><a href="${APP_PATH }/picPage">Fetch Result</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="${APP_PATH }/sitePage">网站信息</a></li>
-            <li><a href="${APP_PATH }/categoryPage">站内分类</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="${APP_PATH }/webpagePage">分页链接库</a></li>
-            <li><a href="${APP_PATH }/linkPage">图页链接库</a></li>
-            <li><a href="${APP_PATH }/webpicPage">Picture Base</a></li>
+            <li><a href="${APP_PATH }/">独立抓图</a></li>
+          	<li role="separator" class="divider"></li>
+            <li><a href="${APP_PATH }/picUrlPage">配置抓取页面</a></li>
+            <li><a href="${APP_PATH }/picPage">查看抓取结果</a></li>
+            
+
           </ul>
         </li>
-        <li class="dropdown" id="fetch_menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fetch Web<span class="caret"></span></a>
-          <ul class="dropdown-menu" >
-            <li><a href="${APP_PATH }/picUrlPage">Fetch Action</a></li>
-            <li><a href="${APP_PATH }/picPage">Fetch Result</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="${APP_PATH }/sitePage">网站信息</a></li>
-            <li><a href="${APP_PATH }/categoryPage">站内分类</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="${APP_PATH }/webpagePage">分页链接库</a></li>
-            <li><a href="${APP_PATH }/linkPage">图页链接库</a></li>
-            <li><a href="${APP_PATH }/webpicPage">Picture Base</a></li>
-          </ul>
-        </li>
+ 
         <li class="dropdown" id="dbinfo_menu">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DB Info<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">整站抓取模块<span class="caret"></span></a>
           <ul class="dropdown-menu" >
-            <li><a href="${APP_PATH }/dbinfoPage">DB Action</a></li>
-            <li><a href="${APP_PATH }/picPage">Fetch Result</a></li>
+            <li><a href="${APP_PATH }/sitePage">网站信息</a></li>
+            <li><a href="${APP_PATH }/categoryPage">站内分类</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="${APP_PATH }/webpagePage">分页链接库</a></li>
+            <li><a href="${APP_PATH }/linkPage">图页链接库</a></li>
+            <li><a href="${APP_PATH }/webpicPage">图片库</a></li>
           </ul>
         </li>
         
       </ul>
-      <form class="navbar-form navbar-left">
+      <form class="navbar-form navbar-left hidden" >
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
         <button type="button" class="btn btn-default">Submit</button><!-- type="submit"  -->
       </form>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right hidden">
         <li><a href="#">登录用户：admin</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Options <span class="caret"></span></a>
